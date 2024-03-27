@@ -7,19 +7,20 @@
   "author": "Pavel Maslov",
   "license": "MIT",
   "dependencies": {
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-scripts": "5.0.1",
-    "react-app-rewired": "^2.2.1",
-    "prop-types": "^15.8.1",
-    "react-usestateref": "^1.0.8",
-    "upnqr": "1.1.0",
     "@pathcheck/dcc-sdk": "^0.0.27",
     "buffer": "^6.0.3",
-    "util": "^0.12.5",
-    "stream-browserify": "^3.0.0",
+    "eslint-config-react-app": "^7.0.1",
+    "http-server": "^0.13.0",
     "process": "^0.11.10",
-    "http-server": "^0.13.0"
+    "prop-types": "^15.8.1",
+    "react": "^17.0.2",
+    "react-app-rewired": "^2.2.1",
+    "react-dom": "^17.0.2",
+    "react-scripts": "5.0.1",
+    "react-usestateref": "^1.0.8",
+    "stream-browserify": "^3.0.0",
+    "upnqr": "1.1.0",
+    "util": "^0.12.5"
   },
   "scripts": {
     "start": "HTTPS=true PORT=8080 HOST=0.0.0.0 react-app-rewired start",
@@ -30,6 +31,9 @@
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",
     "pre-publish-node": "cp LICENSE dist && cp README.md dist && cp public/wasm/zbar* dist"
+  },
+  "overrides": {
+    "react-refresh": "0.14.0"
   },
   "eslintConfig": {
     "extends": "react-app"
