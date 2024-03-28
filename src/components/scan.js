@@ -1,9 +1,9 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import useState from 'react-usestateref';
-import {beep as beepNow, WORKER_TYPE} from "../helpers";
-import {CODE_TYPE} from "../transformers/base";
-import {Upnqr} from "../transformers/upnqr";
-import {Covid19} from "../transformers/covid19";
+import { beep as beepNow, WORKER_TYPE } from "../helpers";
+import { CODE_TYPE } from "../transformers/base";
+import { Upnqr } from "../transformers/upnqr";
+import { Covid19 } from "../transformers/covid19";
 import "../css/scan.css";
 
 const BTN_TXT = {
@@ -18,7 +18,7 @@ const CANVAS_SIZE = {
 
 const CAPTURE_OPTIONS = {
   audio: false,
-  video: {facingMode: "environment"}
+  video: { facingMode: "environment" }
 }
 
 const sw = CANVAS_SIZE.WIDTH;
@@ -116,7 +116,7 @@ export default function Scan({
   const startScan = async () => {
     initWorker();
     canvasElement = document.getElementById("canvas");
-    canvas = canvasElement.getContext("2d", {willReadFrequently: true});
+    canvas = canvasElement.getContext("2d", { willReadFrequently: true });
 
     setBtnText(BTN_TXT.STOP);
     setBarcode(null);
@@ -187,7 +187,7 @@ export default function Scan({
         imageData = canvas.getImageData(x0, y0, crossHairWidth, crossHairHeight);
       else
         imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
-      qrworker.postMessage({width: imageData.width, height: imageData.height});
+      qrworker.postMessage({ width: imageData.width, height: imageData.height });
       qrworker.postMessage(imageData, [imageData.data.buffer]);
     }
   };
@@ -213,32 +213,32 @@ export default function Scan({
   };
 
   const startStyle = () => {
-    const style = {width: 64, textAlign: "center"};
-    if (scanning) return {backgroundColor: "red", ...style};
-    else return {backgroundColor: "", ...style};
+    const style = { width: 64, textAlign: "center" };
+    if (scanning) return { backgroundColor: "red", ...style };
+    else return { backgroundColor: "", ...style };
   };
 
   const xHairStyle = () => {
-    if (crosshairOn) return {backgroundColor: "green"};
-    else return {backgroundColor: ""};
+    if (crosshairOn) return { backgroundColor: "green" };
+    else return { backgroundColor: "" };
   };
 
   const bwStyle = () => {
-    if (bwOn) return {backgroundColor: "green"};
-    else return {backgroundColor: ""};
+    if (bwOn) return { backgroundColor: "green" };
+    else return { backgroundColor: "" };
   };
 
   const beepStyle = () => {
-    if (beepOn) return {backgroundColor: "green"};
-    else return {backgroundColor: ""};
+    if (beepOn) return { backgroundColor: "green" };
+    else return { backgroundColor: "" };
   };
 
   const transformToggleStyle = () => {
-    if (transformToggle) return {backgroundColor: "green", padding: 12};
-    else return {backgroundColor: "", padding: 12};
+    if (transformToggle) return { backgroundColor: "green", padding: 12 };
+    else return { backgroundColor: "", padding: 12 };
   }
 
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   const renderCanvas = () => {
     return <canvas id="canvas" className="scanCanvas" width={CANVAS_SIZE.WIDTH} height={CANVAS_SIZE.HEIGHT} />
@@ -263,7 +263,13 @@ export default function Scan({
   };
 
   const renderQrCodeResult = () => {
-    return barcode;
+    return (
+      <div>
+        <p>ISBN: {barcode}</p>
+        <p><a href={`https://www.googleapis.com/books/v1/volumes?q=isbn:${barcode}`}>Google books</a></p>
+        <p><a href={`https://discover.aucklandlibraries.govt.nz/search?query=${barcode}`}>Auckland libraries</a></p>
+        <p><a href={`https://www.goodreads.com/search?q=${barcode}`}>GoodReads</a></p>
+      </div>)
   }
 
   const onClickBackHandler = (e) => {
@@ -284,9 +290,9 @@ export default function Scan({
     if (codeType === CODE_TYPE.RAW) return "";
     return (
       <a href="!#"
-         className="myHref"
-         style={transformToggleStyle()}
-         onClick={onTransformToggleHandler}>
+        className="myHref"
+        style={transformToggleStyle()}
+        onClick={onTransformToggleHandler}>
         {transformToggle === true ? codeType : "RAW"}
       </a>
     );
@@ -305,8 +311,8 @@ export default function Scan({
   }
 
   const renderCopyToClipboardBtn = () => {
-    return <a href="!#" style={{padding: 12}} id="copyToClip" className="myHref"
-              onClick={onClickCopyToClipboard}>COPY</a>
+    return <a href="!#" style={{ padding: 12 }} id="copyToClip" className="myHref"
+      onClick={onClickCopyToClipboard}>COPY</a>
   }
 
   const renderResult = () => {
@@ -316,11 +322,11 @@ export default function Scan({
           <div className="result">
             {renderQrCodeResult()}
           </div>
-          <div style={{paddingTop: 10, alignItems: "right"}}>
+          <div style={{ paddingTop: 10, alignItems: "right" }}>
             Decoding took {milliseconds} ms
           </div>
-          <div style={{marginTop: 40}}>
-            <a href="!#" style={{padding: 12}} className="myHref" onClick={onClickBackHandler}>BACK</a>
+          <div style={{ marginTop: 40 }}>
+            <a href="!#" style={{ padding: 12 }} className="myHref" onClick={onClickBackHandler}>BACK</a>
             {renderTransformToggle()}
             {renderCopyToClipboardBtn()}
           </div>
