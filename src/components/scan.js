@@ -7,7 +7,7 @@ import { Covid19 } from "../transformers/covid19";
 import "../css/scan.css";
 
 const BTN_TXT = {
-  START: "START",
+  START: "SCAN",
   STOP: "STOP"
 };
 
@@ -244,12 +244,18 @@ export default function Scan({
     return <canvas id="canvas" className="scanCanvas" width={CANVAS_SIZE.WIDTH} height={CANVAS_SIZE.HEIGHT} />
   };
 
+  // const renderButtons = () => {
+  //   return <div className="scanBtn">
+  //     <a href="!#" className="myHref" onClick={onBtnClickHandler} style={startStyle()}>{btnText}</a>
+  //     <a href="!#" className="myHref" onClick={onCrossHairClickHandler} style={xHairStyle()}>X-hair</a>
+  //     <a href="!#" className="myHref" onClick={onBWClickHandler} style={bwStyle()}>B/W</a>
+  //     <a href="!#" className="myHref" onClick={onBeepClickHandler} style={beepStyle()}>Beep</a>
+  //   </div>;
+  // };
+
   const renderButtons = () => {
     return <div className="scanBtn">
       <a href="!#" className="myHref" onClick={onBtnClickHandler} style={startStyle()}>{btnText}</a>
-      <a href="!#" className="myHref" onClick={onCrossHairClickHandler} style={xHairStyle()}>X-hair</a>
-      <a href="!#" className="myHref" onClick={onBWClickHandler} style={bwStyle()}>B/W</a>
-      <a href="!#" className="myHref" onClick={onBeepClickHandler} style={beepStyle()}>Beep</a>
     </div>;
   };
 

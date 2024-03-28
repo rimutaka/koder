@@ -6,7 +6,7 @@ importScripts("wasm/koder.js");
   // Initialize Koder
   const koder = await new Koder().initialize({ wasmDirectory: "./wasm" });
 
-  console.log("Koder initialised");
+  // console.log("Koder initialised");
 
   // Listen for messages from JS main thread containing raw image data
   self.addEventListener('message', event => {
@@ -24,6 +24,12 @@ importScripts("wasm/koder.js");
     const t1 = new Date().getTime();
     if (scanResult) {
       // console.log(JSON.stringify(scanResult)); // {"code":"9781465483942","type":"EAN-13"}
+
+      // only rack ISBN codes - should be limited in the reader, but that's for later
+      if (!scanResult.code || !scanResult.code.startsWith("97")) {
+        // console.log(scanResult.code);
+        return;
+      }
       postMessage({
         data: scanResult.code,
         type: scanResult.type,
