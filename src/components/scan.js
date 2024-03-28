@@ -272,7 +272,7 @@ export default function Scan({
     return (
       <div>
         <p>ISBN: {barcode}</p>
-        <p><a href={`https://www.googleapis.com/books/v1/volumes?q=isbn:${barcode}`}>Google books</a></p>
+        <p><a href={`https://www.google.com/search?tbo=p&tbm=bks&q=isbn:${barcode}`}>Google books</a></p>
         <p><a href={`https://discover.aucklandlibraries.govt.nz/search?query=${barcode}`}>Auckland libraries</a></p>
         <p><a href={`https://www.goodreads.com/search?q=${barcode}`}>GoodReads</a></p>
       </div>)
