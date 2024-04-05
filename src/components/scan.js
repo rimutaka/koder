@@ -5,6 +5,7 @@ import { CODE_TYPE } from "../transformers/base";
 import { Upnqr } from "../transformers/upnqr";
 import { Covid19 } from "../transformers/covid19";
 import "../css/scan.css";
+import { useNavigate } from "react-router-dom";
 
 const BTN_TXT = {
   START: "SCAN",
@@ -60,6 +61,8 @@ export default function Scan({
   const [video] = useState(document.createElement("video"));
   const [barcode, setBarcode] = useState();
   const [milliseconds, setMilliseconds] = useState();
+
+  const navigate = useNavigate();
 
   // Constants
   let qrworker = null;
@@ -269,15 +272,8 @@ export default function Scan({
   };
 
   const renderQrCodeResult = () => {
-    return (
-      <div>
-        <p>ISBN: {barcode}</p>
-        <p><a href={`https://www.google.com/search?tbo=p&tbm=bks&q=isbn:${barcode}`}>Google books</a></p>
-        <p><a href={`https://discover.aucklandlibraries.govt.nz/search?query=${barcode}`}>Auckland libraries</a></p>
-        <p><a href={`https://www.goodreads.com/search?q=${barcode}`}>GoodReads</a></p>
-      </div>)
+    navigate(`/isbn/${barcode}`);
   }
-
   const onClickBackHandler = (e) => {
     e.preventDefault();
     setResultOpen(false);
