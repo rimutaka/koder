@@ -19,10 +19,10 @@ importScripts("wasm/koder.js");
     if (!data) return;
 
     const t0 = new Date().getTime();
-    const scanResult = { "code": "9781761186769", "type": "EAN-13" }; // Everything is Beautiful and Everything Hurts
+    // const scanResult = { "code": "9781761186769", "type": "EAN-13" }; // Everything is Beautiful and Everything Hurts
     // const scanResult = {"code":"9781529109474","type":"EAN-13"}; // Ottolenghi Test Kitchen: Extra Good Things 
     // const scanResult = {"code":"9780998558547","type":"EAN-13"}; // Animal Line Drawing 
-    // const scanResult = koder.decode(data, this.width, this.height);
+    const scanResult = koder.decode(data, this.width, this.height);
     const t1 = new Date().getTime();
     if (scanResult) {
       // console.log(JSON.stringify(scanResult)); // {"code":"9781465483942","type":"EAN-13"}

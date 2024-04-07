@@ -1,9 +1,8 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
-import { BrowserRouter, useParams } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { Routes, Route, Outlet, Link } from "react-router-dom";
 
-import ReactDom from "react-dom";
 import * as serviceWorker from './serviceWorker';
 import Scan from "./components/scan";
 import ScanResult from "./components/scanResult";
@@ -13,11 +12,11 @@ import ScanResult from "./components/scanResult";
 ReactDOM.createRoot(document.getElementById("app")).render(
 
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/koder">
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Scan scanRate={250} covid19={true} upnqr={true} />} />
-          <Route path="isbn/:isbn" element={<ScanResult/>} />
+          <Route path="isbn/:isbn" element={<ScanResult />} />
           <Route path="about" element={<About />} />
           <Route path="dashboard" element={<Dashboard />} />
 
