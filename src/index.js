@@ -12,7 +12,7 @@ import ScanResult from "./components/scanResult";
 ReactDOM.createRoot(document.getElementById("app")).render(
 
   <React.StrictMode>
-    <BrowserRouter basename="/koder">
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Scan scanRate={250} covid19={true} upnqr={true} />} />
