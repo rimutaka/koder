@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import { Routes, Route, Outlet, Link } from "react-router-dom";
 
 import * as serviceWorker from './serviceWorker';
@@ -9,10 +9,12 @@ import ScanResult from "./components/scanResult";
 
 console.log("app started")
 
+// check https://github.com/rafgraph/spa-github-pages for using GH Pages with BrowserRouter
+
 ReactDOM.createRoot(document.getElementById("app")).render(
 
   <React.StrictMode>
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Scan scanRate={250} covid19={true} upnqr={true} />} />
@@ -26,7 +28,7 @@ ReactDOM.createRoot(document.getElementById("app")).render(
           <Route path="*" element={<NoMatch />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   </React.StrictMode>
 );
 
