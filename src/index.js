@@ -7,7 +7,7 @@ import * as serviceWorker from './serviceWorker';
 import Scan from "./components/scan";
 import ScanResult from "./components/scanResult";
 
-
+console.log("app started")
 
 ReactDOM.createRoot(document.getElementById("app")).render(
 
