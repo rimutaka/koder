@@ -36,6 +36,31 @@ body {
   text-align: center;
 }
 
+.welcome {
+  margin: 15px auto;
+  padding: 30px 15px;
+  text-align: center;
+  max-width: 320px;
+  display: flex;
+  align-items: center;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(249, 249, 249, 0.57),
+    rgba(249, 249, 249, 0.95)
+  ),url("welcome-bg.jpg");
+  background-position: bottom right;
+  background-size: cover;
+}
+
+.welcome ul {
+  list-style: none;
+  padding: 0;
+}
+
+.welcome li {
+  margin-bottom: 1em;
+}
+
 .scanCanvas {
   -webkit-box-shadow:inset 0 0 0 1px #e6e6e6;
   -moz-box-shadow:inset 0 0 0 1px #e6e6e6;

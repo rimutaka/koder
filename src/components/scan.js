@@ -76,7 +76,12 @@ export default function Scan({
 
   const startScan = async () => {
     initWorker();
+    // toggle welcome message if it's still on
+    const welcomeMsg = document.getElementById("welcomeMsg");
+    welcomeMsg.style.display = "none";
     canvasElement = document.getElementById("canvas");
+    canvasElement.style.display = "block";
+    // prepare the canvas
     canvas = canvasElement.getContext("2d", { willReadFrequently: true });
 
     setBtnText(BTN_TXT.STOP);
@@ -144,10 +149,15 @@ export default function Scan({
     else return { backgroundColor: "", ...style };
   };
 
+  const welomeStyle = () => {
+    return { display: "none" };
+  };
+
+
   useEffect(() => { }, []);
 
   const renderCanvas = () => {
-    return <canvas id="canvas" className="scanCanvas" width={CANVAS_SIZE.WIDTH} height={CANVAS_SIZE.HEIGHT} />
+    return <canvas id="canvas" className="scanCanvas" width={CANVAS_SIZE.WIDTH} height={CANVAS_SIZE.HEIGHT} style={welomeStyle()} />
   };
 
   const renderButtons = () => {
@@ -156,9 +166,23 @@ export default function Scan({
     </div>;
   };
 
+  const renderWelcomeMsg = () => {
+    return <div id="welcomeMsg" className="welcome scanCanvas">
+      <div>
+        <h1>Scan the ISBN barcode to save the book in your library and more:</h1>
+        <ul>
+          <li>Find it on Goodreads</li>
+          <li>Borrow from Auckland Library</li>
+          <li>Buy new or secondhand</li>
+        </ul>
+      </div>
+    </div>;
+  };
+
   const renderScan = () => {
     return (
       <div className="scan">
+        {renderWelcomeMsg()}
         {renderCanvas()}
         {renderButtons()}
       </div>
