@@ -8,7 +8,7 @@ export default function Welcome() {
   const navigate = useNavigate();
 
   const startStyle = () => {
-    const style = { width: 64, textAlign: "center" };
+    const style = { width: 100, textAlign: "center" };
     return { backgroundColor: "", ...style };
   };
 
@@ -19,7 +19,7 @@ export default function Welcome() {
 
   const renderButtons = () => {
     return <div className="scanBtn">
-      <a href="!#" onClick={onBtnClickHandler} className="myHref" style={startStyle()}>Scannn</a>
+      <a href="!#" onClick={onBtnClickHandler} className="myHref" style={startStyle()}>SCAN ISBN</a>
     </div>;
   };
 
@@ -29,7 +29,7 @@ export default function Welcome() {
         <h1>Scan the ISBN barcode to save the book in your library and more:</h1>
         <ul>
           <li>Find it on Goodreads</li>
-          <li>Borrow from Auckland Library</li>
+          <li>Borrow from Auckland Libraries</li>
           <li>Buy new or secondhand</li>
         </ul>
       </div>
