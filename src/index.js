@@ -6,6 +6,7 @@ import { Routes, Route, Outlet, Link } from "react-router-dom";
 import * as serviceWorker from './serviceWorker';
 import Scan from "./components/scan";
 import ScanResult from "./components/scanResult";
+import Welcome from "./components/welcome";
 
 console.log("app started")
 
@@ -13,23 +14,18 @@ console.log("app started")
 
 ReactDOM.createRoot(document.getElementById("app")).render(
 
-  <React.StrictMode>
-    <HashRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Scan scanRate={250} covid19={true} upnqr={true} />} />
-          <Route path="isbn/:isbn" element={<ScanResult />} />
-          <Route path="about" element={<About />} />
-          <Route path="dashboard" element={<Dashboard />} />
-
-          {/* Using path="*"" means "match anything", so this route
-                acts like a catch-all for URLs that we don't have explicit
-                routes for. */}
-          <Route path="*" element={<NoMatch />} />
-        </Route>
-      </Routes>
-    </HashRouter>
-  </React.StrictMode>
+  <HashRouter>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Welcome />} />
+        <Route path="scan" element={<Scan scanRate={250} />} />
+        <Route path="isbn/:isbn" element={<ScanResult />} />
+        <Route path="about" element={<About />} />
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="*" element={<NoMatch />} />
+      </Route>
+    </Routes>
+  </HashRouter>
 );
 
 // ReactDom.render((

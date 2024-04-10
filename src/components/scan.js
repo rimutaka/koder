@@ -4,8 +4,8 @@ import "../css/scan.css";
 import { useNavigate } from "react-router-dom";
 
 const BTN_TXT = {
-  START: "SCAN",
-  STOP: "STOP"
+  START: "SCAN ISBN",
+  STOP: "STOP SCANNING"
 };
 
 const CANVAS_SIZE = {
@@ -31,13 +31,8 @@ const crossHairSvg = "M77.125 148.02567c0-3.5774 2.73862-6.27567 6.37076-6.27567
 const crossHairWidth = 217, crossHairHeight = 200, x0 = 53, y0 = 117;
 
 export default function Scan({
-  beep = true,
   decode = true,
   scanRate = 250,
-  bw = false,
-  crosshair = true,
-  upnqr = false,
-  covid19 = false
 }) {
 
   // Component state
@@ -76,12 +71,7 @@ export default function Scan({
 
   const startScan = async () => {
     initWorker();
-    // toggle welcome message if it's still on
-    const welcomeMsg = document.getElementById("welcomeMsg");
-    welcomeMsg.style.display = "none";
     canvasElement = document.getElementById("canvas");
-    canvasElement.style.display = "block";
-    // prepare the canvas
     canvas = canvasElement.getContext("2d", { willReadFrequently: true });
 
     setBtnText(BTN_TXT.STOP);
@@ -94,18 +84,20 @@ export default function Scan({
 
       requestAnimationFrame(tick);
     } catch (err) {
-      stopScan().then();
-      console.log("stopped by the user");
-      alert(err);
+      console.log("failed to start scan");
+      stopScan();
+      console.error(err);
     }
   };
 
-  const stopScan = async () => {
+  const stopScan = () => {
     setScanning(false);
     setBtnText(BTN_TXT.START);
-    await video.pause();
+    video.pause();
     if (video.srcObject) {
-      video.srcObject.getVideoTracks().forEach(track => track.stop());
+      video.srcObject.getVideoTracks().forEach(track => {
+        track.stop();
+      });
       video.srcObject = null;
     }
   };
@@ -144,20 +136,20 @@ export default function Scan({
   };
 
   const startStyle = () => {
-    const style = { width: 64, textAlign: "center" };
+    const style = { textAlign: "center" };
     if (scanning) return { backgroundColor: "red", ...style };
     else return { backgroundColor: "", ...style };
   };
 
-  const welomeStyle = () => {
-    return { display: "none" };
-  };
-
-
-  useEffect(() => { }, []);
+  useEffect(() => {
+    const startScanOnce = async () => {
+      await startScan();
+    }
+    startScanOnce().catch(console.error);
+  }, []);
 
   const renderCanvas = () => {
-    return <canvas id="canvas" className="scanCanvas" width={CANVAS_SIZE.WIDTH} height={CANVAS_SIZE.HEIGHT} style={welomeStyle()} />
+    return <canvas id="canvas" className="scanCanvas" width={CANVAS_SIZE.WIDTH} height={CANVAS_SIZE.HEIGHT} />
   };
 
   const renderButtons = () => {
@@ -166,23 +158,9 @@ export default function Scan({
     </div>;
   };
 
-  const renderWelcomeMsg = () => {
-    return <div id="welcomeMsg" className="welcome scanCanvas">
-      <div>
-        <h1>Scan the ISBN barcode to save the book in your library and more:</h1>
-        <ul>
-          <li>Find it on Goodreads</li>
-          <li>Borrow from Auckland Library</li>
-          <li>Buy new or secondhand</li>
-        </ul>
-      </div>
-    </div>;
-  };
-
   const renderScan = () => {
     return (
       <div className="scan">
-        {renderWelcomeMsg()}
         {renderCanvas()}
         {renderButtons()}
       </div>

@@ -2,8 +2,11 @@ import React, { useEffect } from "react";
 // import useState from 'react-usestateref';
 import "../css/scan.css";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function ScanResult() {
+
+  const navigate = useNavigate();
 
   let { isbn } = useParams();
 
@@ -13,14 +16,15 @@ export default function ScanResult() {
     return (
       <div>
         <p>ISBN: {isbn}</p>
-        <p><a href={`https://www.goodreads.com/search?q=${isbn}`}>GoodReads</a> | <a href={`https://app.thestorygraph.com/browse?search_term=${isbn}`}>StoryGraph</a> | </p>
+        <p><a href={`https://www.goodreads.com/search?q=${isbn}`}>GoodReads</a> | <a href={`https://app.thestorygraph.com/browse?search_term=${isbn}`}>StoryGraph</a></p>
         <p><a href={`https://discover.aucklandlibraries.govt.nz/search?query=${isbn}`}>Auckland libraries</a></p>
         <p><a href={`https://www.google.com/search?tbo=p&tbm=bks&q=isbn:${isbn}`}>Google books</a></p>
-        <p><a href={`https://www.thenile.co.nz/search?s.q=${isbn}`}>The Nile</a> | <a href={`https://www.amazon.com/s?k=${isbn}`}>Amazon</a></p>
+        <p><a href={`https://www.thenile.co.nz/search?s.q=${isbn}`}>The Nile</a> | <a href={`https://www.amazon.com/s?k=${isbn}`}>Amazon</a> | <a href={`https://www.mightyape.co.nz/books?q=${isbn}`}>MightyApe</a></p>
       </div>)
   }
   const onClickBackHandler = (e) => {
     e.preventDefault();
+    navigate(`/scan`)
   };
 
   const onClickCopyToClipboard = async (e) => {
@@ -37,7 +41,7 @@ export default function ScanResult() {
 
   const renderCopyToClipboardBtn = () => {
     return <a href="!#" style={{ padding: 12 }} id="copyToClip" className="myHref"
-      onClick={onClickCopyToClipboard}>COPY</a>
+      onClick={onClickCopyToClipboard}>COPY ISBN</a>
   }
 
   const renderResult = () => {
@@ -47,7 +51,7 @@ export default function ScanResult() {
           {renderQrCodeResult()}
         </div>
         <div style={{ marginTop: 40 }}>
-          <a href="!#" style={{ padding: 12 }} className="myHref" onClick={onClickBackHandler}>BACK</a>
+          <a href="!#" style={{ padding: 12 }} className="myHref" onClick={onClickBackHandler}>SCAN AGAIN</a>
           {renderCopyToClipboardBtn()}
         </div>
       </div>);
