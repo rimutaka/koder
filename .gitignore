@@ -12,6 +12,7 @@
 /build
 
 # misc
+*.zip
 .DS_Store
 .env.local
 .env.development.local
@@ -27,3 +28,11 @@ yarn-error.log*
 .idea/inspectionProfiles
 .idea/vcs.xml
 .idea/workspace.xml
+
+# rust
+*/target
+**/*.rs.bk
+Cargo.lock
+bin/
+pkg/
+wasm-pack.log
