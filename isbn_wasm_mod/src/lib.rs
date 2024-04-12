@@ -21,11 +21,17 @@ pub fn hello_wasm() {
     log("Hello from WASM!");
 }
 
+#[wasm_bindgen]
+pub fn log_isbn(isbn: String) {
+    log(&format!("WASM ISBN: {isbn}"));
+    report_progress(isbn);
+}
+
 /// This is a proxy for report_progress() in progress.js
 /// to send messages to other js scripts.
 #[wasm_bindgen(module = "/src/progress.js")]
 extern "C" {
-    pub fn report_progress(msg: &str);
+    pub fn report_progress(msg: String);
 }
 
 /// All error handling in this crate is based on either retrying a request after some time
