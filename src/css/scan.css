@@ -128,3 +128,17 @@ body {
   font-family: monospace;
   font-size: 15px;
 }
+
+.fade-in {
+  animation-duration: 2s;
+  animation-name: fade-in;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 100;
+  }
+}

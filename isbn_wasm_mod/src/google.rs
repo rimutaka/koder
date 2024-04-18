@@ -55,7 +55,6 @@ pub(crate) struct VolumeInfo {
     pub page_count: Option<i64>,
     pub categories: Vec<String>,
     pub image_links: Option<ImageLinks>,
-    pub sale_info: Option<SaleInfo>,
 }
 
 /// Part of GoogleBooks API response
@@ -65,6 +64,7 @@ pub struct Volume {
     pub id: String,
     pub self_link: String,
     pub volume_info: VolumeInfo,
+    pub sale_info: Option<SaleInfo>,
 }
 
 /// The root of GoogleBooks API response

@@ -9,7 +9,6 @@
   "dependencies": {
     "@pathcheck/dcc-sdk": "^0.0.27",
     "buffer": "^6.0.3",
-    "eslint-config-react-app": "^7.0.1",
     "http-server": "^0.13.0",
     "process": "^0.11.10",
     "prop-types": "^15.8.1",
@@ -22,6 +21,10 @@
     "stream-browserify": "^3.0.0",
     "upnqr": "1.1.0",
     "util": "^0.12.5"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0",
+    "eslint-config-react-app": "^7.0.1"
   },
   "scripts": {
     "start": "HTTPS=true PORT=8080 HOST=0.0.0.0 react-app-rewired start",
