@@ -17,7 +17,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Deserialize, Serialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct IndustryIdentifier {
-    pub type_: String,
+    pub r#type: String,
     pub identifier: String,
 }
 
@@ -33,15 +33,18 @@ pub struct ImageLinks {
 #[derive(Deserialize, Serialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct ListPrice {
-    pub amount: f64,
-    pub currency_code: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub amount: Option<f64>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub currency_code: Option<String>,
 }
 
 /// Part of GoogleBooks API response
 #[derive(Deserialize, Serialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct SaleInfo {
-    pub list_price: ListPrice,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub list_price: Option<ListPrice>,
 }
 
 /// Part of GoogleBooks API response
@@ -50,10 +53,13 @@ pub struct SaleInfo {
 pub(crate) struct VolumeInfo {
     pub title: String,
     pub authors: Vec<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub description: Option<String>,
     pub industry_identifiers: Vec<IndustryIdentifier>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub page_count: Option<i64>,
     pub categories: Vec<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub image_links: Option<ImageLinks>,
 }
 
@@ -64,6 +70,7 @@ pub struct Volume {
     pub id: String,
     pub self_link: String,
     pub volume_info: VolumeInfo,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub sale_info: Option<SaleInfo>,
 }
 
