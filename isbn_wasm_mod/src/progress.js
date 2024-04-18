@@ -21,7 +21,7 @@ function handleError(error) {
 //
 // This function is imported into lib.rs
 export function report_progress(msg) {
-  console.log(`Progress: ${msg}`)
+  // console.log(`Progress: ${msg}`)
   // we have to handle errors gracefully because if the sending fails,
   // it brings down the entire thread and the WASM dies
   postMessage(msg);
