@@ -19,10 +19,9 @@ ReactDOM.createRoot(document.getElementById("app")).render(
       <Route path="/" element={<Layout />}>
         <Route index element={<Welcome />} />
         <Route path="scan" element={<Scan scanRate={250} />} />
-        <Route path="isbn/:isbn" element={<ScanResult />} />
         <Route path="about" element={<About />} />
         <Route path="dashboard" element={<Dashboard />} />
-        <Route path="*" element={<NoMatch />} />
+        <Route path="*" element={<ScanResult />} />
       </Route>
     </Routes>
   </HashRouter>

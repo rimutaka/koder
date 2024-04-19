@@ -64,7 +64,7 @@ export default function Scan({
 
         let res = result.data;
 
-        navigate(`/isbn/${res}`);
+        navigate(`/${res}`);
       }
     };
   };

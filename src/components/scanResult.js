@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import useState from 'react-usestateref';
 import "../css/scan.css";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import initWasmModule, { get_book_data } from '../wasm-rust/isbn_mod.js';
 
 function P({ text }) {
@@ -32,7 +31,11 @@ let previousIsbn = "";
 export default function ScanResult() {
 
   const navigate = useNavigate();
-  let { isbn } = useParams();
+  const location = useLocation();
+
+  // console.log(location);
+  let isbn = location.pathname.match(/^\/\d{13}(\/|$)/)?.[0]?.replace(/\//g, "") || "";
+  // console.log(`ISBN: ${isbn}`);
 
   const [title, setTitle] = useState();
   const [authors, setAuthors] = useState();
@@ -43,7 +46,7 @@ export default function ScanResult() {
 
   // if the ISBN is different from the previous one, fetch book data
   // from multiple sources with WASM
-  if (isbn !== previousIsbn) {
+  if (isbn && isbn !== previousIsbn) {
     previousIsbn = isbn;
     (async () => {
       await initWasmModule(); // run the wasm initializer before calling wasm methods
@@ -51,6 +54,8 @@ export default function ScanResult() {
       // the responses are sent back as messages to the window object   
       get_book_data(isbn);
     })();
+  } else if (!isbn) {
+    isbn = "no ISBN code found in the URL";
   }
 
   // useEffect(() => { }, []);
@@ -84,6 +89,10 @@ export default function ScanResult() {
       // const amount = data.googleBooks.Ok?.items[0]?.saleInfo?.listPrice?.amount;
       // const currency = data.googleBooks.Ok?.items[0]?.saleInfo?.listPrice?.currencyCode;
       // if (amount) setPrice(`${currency} ${amount}`);
+
+      // navigate to the new URL with the book title
+      let url = isbn + "/" + title.replace(/\s/g, "-").toLowerCase() + "-by-" + authors.replace(/\s/g, "-").replace(/,/g, "").toLowerCase();
+      navigate(`/${url}`);
     }
     else {
       // console.log(data);
@@ -110,8 +119,7 @@ export default function ScanResult() {
 
   const onClickCopyToClipboard = async (e) => {
     e.preventDefault();
-    const shareText = `${title} by ${authors}, more at ${window.location.href}`;
-    await navigator.clipboard.writeText(shareText);
+    await navigator.clipboard.writeText(window.location.href);
     const btnId = document.getElementById("copyToClip");
     btnId.innerText = "COPIED TO CLIPBOARD";
     btnId.style.backgroundColor = "green";
