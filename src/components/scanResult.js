@@ -36,8 +36,8 @@ export default function ScanResult() {
 
   const [title, setTitle] = useState();
   const [authors, setAuthors] = useState();
-  const [price, setPrice] = useState();
-  const [thumbnail, setThumbnail] = useState();
+  // const [price, setPrice] = useState();
+  // const [thumbnail, setThumbnail] = useState();
 
   console.log("render");
 
@@ -73,16 +73,21 @@ export default function ScanResult() {
 
     // see `WasmResult` and `WasmResponse` in the WASM code for the structure of the data
     if (data?.googleBooks?.Ok) {
-      const title = data.googleBooks.Ok?.items[0]?.volumeInfo?.title;
+      let title = data.googleBooks.Ok?.items[0]?.volumeInfo?.title;
+      if (!title) title = "No data in Google for this ISBN code";
       // console.log(`Title: ${title}`);
       setTitle(title);
       const authors = data.googleBooks.Ok?.items[0]?.volumeInfo?.authors?.join(", ");
       if (authors) setAuthors(authors);
-      const thumbnail = data.googleBooks.Ok?.items[0]?.volumeInfo?.imageLinks?.thumbnail;
-      if (thumbnail) setThumbnail(thumbnail);
-      const amount = data.googleBooks.Ok?.items[0]?.saleInfo?.listPrice?.amount;
-      const currency = data.googleBooks.Ok?.items[0]?.saleInfo?.listPrice?.currencyCode;
-      if (amount) setPrice(`${currency} ${amount}`);
+      // const thumbnail = data.googleBooks.Ok?.items[0]?.volumeInfo?.imageLinks?.thumbnail;
+      // if (thumbnail) setThumbnail(thumbnail);
+      // const amount = data.googleBooks.Ok?.items[0]?.saleInfo?.listPrice?.amount;
+      // const currency = data.googleBooks.Ok?.items[0]?.saleInfo?.listPrice?.currencyCode;
+      // if (amount) setPrice(`${currency} ${amount}`);
+    }
+    else {
+      // console.log(data);
+      setTitle("Cannot get data from Google for this book");
     }
   });
 
