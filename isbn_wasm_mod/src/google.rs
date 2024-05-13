@@ -21,13 +21,13 @@ use serde::{Deserialize, Serialize};
 //     pub identifier: String,
 // }
 
-// /// Part of GoogleBooks API response
-// #[derive(Deserialize, Serialize, Debug)]
-// #[serde(rename_all = "camelCase")]
-// pub struct ImageLinks {
-//     pub small_thumbnail: String,
-//     pub thumbnail: String,
-// }
+/// Part of GoogleBooks API response
+#[derive(Deserialize, Serialize, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct ImageLinks {
+    pub small_thumbnail: String,
+    pub thumbnail: String,
+}
 
 // /// Part of GoogleBooks API response
 // #[derive(Deserialize, Serialize, Debug)]
@@ -63,7 +63,7 @@ pub(crate) struct VolumeInfo {
     // #[serde(default = "Vec::new")]
     // pub categories: Vec<String>,
     // #[serde(skip_serializing_if = "Option::is_none")]
-    // pub image_links: Option<ImageLinks>,
+    pub image_links: Option<ImageLinks>,
 }
 
 /// Part of GoogleBooks API response

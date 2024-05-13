@@ -142,6 +142,15 @@ export default function Scan({
   };
 
   useEffect(() => {
+
+    // these values are used to set the meta tags in index.html
+    // and have to be reset when the component is mounted from
+    // a scan that sets them to the book details
+    // make sure the values are synchronized with index.html
+    // TODO: change ids to constants
+    document.getElementById("ogImage").setAttribute('content', "Scan ISBN to record or share a book");
+    document.getElementById("ogTitle").setAttribute('content', "/logo.png");
+
     const startScanOnce = async () => {
       await startScan();
     }

@@ -4,7 +4,7 @@ import "../css/scan.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import initWasmModule, { get_book_data } from '../wasm-rust/isbn_mod.js';
 
-function P({ text }) {
+function HtmlP({ text }) {
 
   if (text && !text.includes("undefined")) {
     return <p className="fade-in">{text}</p>
@@ -14,7 +14,7 @@ function P({ text }) {
   }
 }
 
-function H3({ text }) {
+function HtmlH3({ text }) {
 
   if (text) {
     return <h3 className="fade-in">{text}</h3>
@@ -40,7 +40,7 @@ export default function ScanResult() {
   const [title, setTitle] = useState();
   const [authors, setAuthors] = useState();
   // const [price, setPrice] = useState();
-  // const [thumbnail, setThumbnail] = useState();
+  const [thumbnail, setThumbnail] = useState();
 
   console.log("render");
 
@@ -82,74 +82,83 @@ export default function ScanResult() {
       if (!title) title = "No data in Google for this ISBN code";
       // console.log(`Title: ${title}`);
       setTitle(title);
-      const authors = data.googleBooks.Ok?.items[0]?.volumeInfo?.authors?.join(", ");
-      if (authors) setAuthors(authors);
-      // const thumbnail = data.googleBooks.Ok?.items[0]?.volumeInfo?.imageLinks?.thumbnail;
-      // if (thumbnail) setThumbnail(thumbnail);
-      // const amount = data.googleBooks.Ok?.items[0]?.saleInfo?.listPrice?.amount;
-      // const currency = data.googleBooks.Ok?.items[0]?.saleInfo?.listPrice?.currencyCode;
-      // if (amount) setPrice(`${currency} ${amount}`);
+      setAuthors(data.googleBooks.Ok?.items[0]?.volumeInfo?.authors?.join(", "));
+      setThumbnail(data.googleBooks.Ok?.items[0]?.volumeInfo?.imageLinks?.thumbnail);
+  // if (thumbnail) setThumbnail(thumbnail);
+  // const amount = data.googleBooks.Ok?.items[0]?.saleInfo?.listPrice?.amount;
+  // const currency = data.googleBooks.Ok?.items[0]?.saleInfo?.listPrice?.currencyCode;
+  // if (amount) setPrice(`${currency} ${amount}`);
 
-      // navigate to the new URL with the book title
-      let url = isbn + "/" + title.replace(/\s/g, "-").toLowerCase() + "-by-" + authors.replace(/\s/g, "-").replace(/,/g, "").toLowerCase();
-      navigate(`/${url}`);
-    }
+  // navigate to the new URL with the book title
+  let url = isbn + "/" + title.replace(/\s/g, "-").toLowerCase() + "-by-" + authors.replace(/\s/g, "-").replace(/,/g, "").toLowerCase();
+  navigate(`/${url}`);
+}
     else {
-      // console.log(data);
-      setTitle("Cannot get data from Google for this book");
-    }
+  // console.log(data);
+  setTitle("Cannot get data from Google for this book");
+}
   });
 
-  const renderQrCodeResult = () => {
-    return (
-      <div>
-        <p>ISBN: {isbn}</p>
-        <H3 text={title} />
-        <P text={`by ${authors}`} />
-        <p><a href={`https://www.goodreads.com/search?q=${isbn}`}>GoodReads</a> | <a href={`https://app.thestorygraph.com/browse?search_term=${isbn}`}>StoryGraph</a></p>
-        <p><a href={`https://discover.aucklandlibraries.govt.nz/search?query=${isbn}`}>Auckland libraries</a></p>
-        <p><a href={`https://www.google.com/search?tbo=p&tbm=bks&q=isbn:${isbn}`}>Google books</a></p>
-        <p><a href={`https://www.thenile.co.nz/search?s.q=${isbn}`}>The Nile</a> | <a href={`https://www.amazon.com/s?k=${isbn}`}>Amazon</a> | <a href={`https://www.mightyape.co.nz/books?q=${isbn}`}>MightyApe</a></p>
-      </div>)
-  }
-  const onClickBackHandler = (e) => {
-    e.preventDefault();
-    navigate(`/scan`)
-  };
+const renderQrCodeResult = () => {
 
-  const onClickCopyToClipboard = async (e) => {
-    e.preventDefault();
-    await navigator.clipboard.writeText(window.location.href);
-    const btnId = document.getElementById("copyToClip");
-    btnId.innerText = "COPIED TO CLIPBOARD";
-    btnId.style.backgroundColor = "green";
-    setTimeout(() => {
-      btnId.innerText = "SHARE";
-      btnId.style.backgroundColor = "";
-    }, 3000);
-  }
+  // update page title
+  let fullTitle = (title) ? title + " by " + authors : "Book not found";
+  document.title = fullTitle;
 
-  const renderCopyToClipboardBtn = () => {
-    return <a href="!#" style={{ padding: 12 }} id="copyToClip" className="myHref"
-      onClick={onClickCopyToClipboard}>SHARE</a>
-  }
-
-  const renderResult = () => {
-    return (
-      <div className="resultModal">
-        <div className="result">
-          {renderQrCodeResult()}
-        </div>
-        <div style={{ marginTop: 40 }}>
-          <a href="!#" style={{ padding: 12 }} className="myHref" onClick={onClickBackHandler}>SCAN AGAIN</a>
-          {renderCopyToClipboardBtn()}
-        </div>
-      </div>);
-  };
+  // update meta tags for social media sharing
+  // TODO: change ids to constants
+  document.getElementById("ogImage").setAttribute('content', fullTitle);
+  document.getElementById("ogTitle").setAttribute('content', thumbnail);
 
   return (
     <div>
-      {renderResult()}
-    </div>
-  )
+      <p>ISBN: {isbn}</p>
+      <HtmlH3 text={title} />
+      <HtmlP text={`by ${authors}`} />
+      <p><a href={`https://www.goodreads.com/search?q=${isbn}`}>GoodReads</a> | <a href={`https://app.thestorygraph.com/browse?search_term=${isbn}`}>StoryGraph</a></p>
+      <p><a href={`https://discover.aucklandlibraries.govt.nz/search?query=${isbn}`}>Auckland libraries</a></p>
+      <p><a href={`https://www.google.com/search?tbo=p&tbm=bks&q=isbn:${isbn}`}>Google books</a></p>
+      <p><a href={`https://www.thenile.co.nz/search?s.q=${isbn}`}>The Nile</a> | <a href={`https://www.amazon.com/s?k=${isbn}`}>Amazon</a> | <a href={`https://www.mightyape.co.nz/books?q=${isbn}`}>MightyApe</a></p>
+    </div>)
+}
+const onClickBackHandler = (e) => {
+  e.preventDefault();
+  navigate(`/scan`)
+};
+
+const onClickCopyToClipboard = async (e) => {
+  e.preventDefault();
+  await navigator.clipboard.writeText(window.location.href);
+  const btnId = document.getElementById("copyToClip");
+  btnId.innerText = "COPIED TO CLIPBOARD";
+  btnId.style.backgroundColor = "green";
+  setTimeout(() => {
+    btnId.innerText = "SHARE";
+    btnId.style.backgroundColor = "";
+  }, 3000);
+}
+
+const renderCopyToClipboardBtn = () => {
+  return <a href="!#" style={{ padding: 12 }} id="copyToClip" className="myHref"
+    onClick={onClickCopyToClipboard}>SHARE</a>
+}
+
+const renderResult = () => {
+  return (
+    <div className="resultModal">
+      <div className="result">
+        {renderQrCodeResult()}
+      </div>
+      <div style={{ marginTop: 40 }}>
+        <a href="!#" style={{ padding: 12 }} className="myHref" onClick={onClickBackHandler}>SCAN AGAIN</a>
+        {renderCopyToClipboardBtn()}
+      </div>
+    </div>);
+};
+
+return (
+  <div>
+    {renderResult()}
+  </div>
+)
 };
