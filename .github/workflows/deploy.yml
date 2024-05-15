@@ -13,9 +13,8 @@ jobs:
         uses: reggionick/s3-deploy@v4
         with:
           folder: docs
-          bucket: arn:aws:s3:::bookwormfood
+          bucket: bookwormfood
           bucket-region: us-east-1
           delete-removed: true
           no-cache: true
-          private: true
           files-to-include: '{.*/**,**}'
