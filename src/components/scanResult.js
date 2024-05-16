@@ -42,7 +42,7 @@ export default function ScanResult() {
   // const [price, setPrice] = useState();
   const [thumbnail, setThumbnail] = useState();
 
-  console.log("render");
+  // console.log("render");
 
   // if the ISBN is different from the previous one, fetch book data
   // from multiple sources with WASM

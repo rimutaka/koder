@@ -28,7 +28,7 @@
   },
   "scripts": {
     "start": "HTTPS=true PORT=8080 HOST=0.0.0.0 react-app-rewired start",
-    "build": "react-app-rewired build && npm run build-sw && npm run clean-cra-sw && rm -rf ./docs && mv ./build ./docs && touch ./docs/.nojekyll",
+    "build": "react-app-rewired build && npm run build-sw && npm run clean-cra-sw",
     "build-sw": "node ./src/sw-build.js",
     "clean-cra-sw": "rm -f build/precache-manifest.*.js && rm -f build/service-worker.js",
     "test": "react-app-rewired test",
