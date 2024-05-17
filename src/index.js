@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
-import { HashRouter } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { Routes, Route, Outlet, Link } from "react-router-dom";
 
 import * as serviceWorker from './serviceWorker';
@@ -14,7 +14,7 @@ console.log("app started")
 
 ReactDOM.createRoot(document.getElementById("app")).render(
 
-  <HashRouter>
+  <BrowserRouter>
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Welcome />} />
@@ -24,7 +24,7 @@ ReactDOM.createRoot(document.getElementById("app")).render(
         <Route path="*" element={<ScanResult />} />
       </Route>
     </Routes>
-  </HashRouter>
+  </BrowserRouter>
 );
 
 // ReactDom.render((

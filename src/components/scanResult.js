@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import useState from 'react-usestateref';
 import "../css/scan.css";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -34,7 +34,10 @@ export default function ScanResult() {
   const location = useLocation();
 
   // console.log(location);
-  let isbn = location.pathname.match(/^\/\d{13}(\/|$)/)?.[0]?.replace(/\//g, "") || "";
+  // the ISBN can be located anywhere in the URL, 
+  // e.g. https://localhost:8080/the-subtle-art-of-not-giving-a-f-k-by-mark-manson/9780062457714/
+  // or https://localhost:8080/9780062457714/the-subtle-art-of-not-giving-a-f-k-by-mark-manson
+  let isbn = location.pathname.match(/\/\d{13}(\/|$)/)?.[0]?.replace(/\//g, "") || "";
   // console.log(`ISBN: ${isbn}`);
 
   const [title, setTitle] = useState();
@@ -91,8 +94,8 @@ export default function ScanResult() {
       // const currency = data.googleBooks.Ok?.items[0]?.saleInfo?.listPrice?.currencyCode;
       // if (amount) setPrice(`${currency} ${amount}`);
 
-      // navigate to the new URL with the book title
-      let url = isbn + "/" + title.replace(/\s/g, "-").toLowerCase() + "-by-" + authors.replace(/\s/g, "-").replace(/,/g, "").toLowerCase();
+      // navigate to the new URL with the book title, e.g. https://localhost:8080/the-subtle-art-of-not-giving-a-f-k-by-mark-manson/9780062457714/
+      let url = (title.toLowerCase().replace(/[^a-z0-9]/g, "-") + "-by-" + authors.toLowerCase().replace(/[^a-z0-9]/g, "-").replace(/,/g, "") + "/" + isbn + "/").replace(/-{2,}/g, "-");
       navigate(`/${url}`);
     }
     else {
