@@ -112,8 +112,8 @@ export default function ScanResult() {
 
     // update meta tags for social media sharing
     // TODO: change ids to constants
-    document.getElementById("ogImage").setAttribute('content', fullTitle);
-    document.getElementById("ogTitle").setAttribute('content', thumbnail);
+    document.getElementById("ogImage").setAttribute('content', thumbnail);
+    document.getElementById("ogTitle").setAttribute('content', fullTitle);
 
     return (
       <div>
