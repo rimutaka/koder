@@ -148,7 +148,8 @@ export default function Scan({
     // a scan that sets them to the book details
     // make sure the values are synchronized with index.html
     // TODO: change ids to constants
-    document.getElementById("ogImage").setAttribute('content', "Scan ISBN to record or share a book");
+    document.title="Book barcode scanner"
+    document.getElementById("ogImage").setAttribute('content', "Scan book barcodes to record or share the books");
     document.getElementById("ogTitle").setAttribute('content', "/logo.png");
 
     const startScanOnce = async () => {
