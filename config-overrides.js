@@ -13,5 +13,8 @@ module.exports = function override(config, env) {
     }),
   );
 
+  // CloudFront has to serve the bundle from the root regardless of the current URL
+  config.output.publicPath = "/";
+
   return config;
 };
