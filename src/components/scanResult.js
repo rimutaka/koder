@@ -111,7 +111,7 @@ export default function ScanResult() {
     document.title = fullTitle;
 
     // update meta tags for social media sharing
-    // TODO: change ids to constants  
+    // TODO: change ids to constants
     document.getElementById("ogImage").setAttribute('content', thumbnail);
     document.getElementById("ogTitle").setAttribute('content', fullTitle);
 
