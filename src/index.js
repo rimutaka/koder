@@ -8,6 +8,8 @@ import Scan from "./components/scan";
 import ScanResult from "./components/scanResult";
 import Welcome from "./components/welcome";
 
+import ".//css/scan.css";
+
 console.log("app started")
 
 // check https://github.com/rafgraph/spa-github-pages for using GH Pages with BrowserRouter

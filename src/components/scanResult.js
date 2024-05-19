@@ -1,6 +1,5 @@
 import React from "react";
 import useState from 'react-usestateref';
-import "../css/scan.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import initWasmModule, { get_book_data } from '../wasm-rust/isbn_mod.js';
 
@@ -120,10 +119,28 @@ export default function ScanResult() {
         <p>ISBN: {isbn}</p>
         <HtmlH3 text={title} />
         <HtmlP text={`by ${authors}`} />
-        <p><a href={`https://www.goodreads.com/search?q=${isbn}`}>GoodReads</a> | <a href={`https://app.thestorygraph.com/browse?search_term=${isbn}`}>StoryGraph</a></p>
-        <p><a href={`https://discover.aucklandlibraries.govt.nz/search?query=${isbn}`}>Auckland libraries</a></p>
-        <p><a href={`https://www.google.com/search?tbo=p&tbm=bks&q=isbn:${isbn}`}>Google books</a></p>
-        <p><a href={`https://www.thenile.co.nz/search?s.q=${isbn}`}>The Nile</a> | <a href={`https://www.amazon.com/s?k=${isbn}`}>Amazon</a> | <a href={`https://www.mightyape.co.nz/books?q=${isbn}`}>MightyApe</a></p>
+        <table>
+          <tr>
+            <th>About</th>
+            <th>Buy</th>
+            <th>Borrow</th>
+          </tr>
+          <tr>
+            <td>
+              <p><a href={`https://www.goodreads.com/search?q=${isbn}`}>GoodReads</a></p>
+              <p><a href={`https://app.thestorygraph.com/browse?search_term=${isbn}`}>StoryGraph</a></p>
+              <p><a href={`https://www.google.com/search?tbo=p&tbm=bks&q=isbn:${isbn}`}>Google books</a></p>
+            </td>
+            <td>
+              <p><a href={`https://www.thenile.co.nz/search?s.q=${isbn}`}>The Nile</a></p>
+              <p><a href={`https://www.amazon.com/s?k=${isbn}`}>Amazon</a></p>
+              <p><a href={`https://www.mightyape.co.nz/books?q=${isbn}`}>MightyApe</a></p>
+            </td>
+            <td>
+              <p><a href={`https://discover.aucklandlibraries.govt.nz/search?query=${isbn}`}>Auckland libraries</a></p>
+            </td>
+          </tr>
+        </table>
       </div>)
   }
   const onClickBackHandler = (e) => {

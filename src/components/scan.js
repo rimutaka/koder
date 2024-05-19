@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import useState from 'react-usestateref';
-import "../css/scan.css";
 import { useNavigate } from "react-router-dom";
 
 const BTN_TXT = {

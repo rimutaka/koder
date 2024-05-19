@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import "../css/scan.css";
 import { useNavigate } from "react-router-dom";
 
 
