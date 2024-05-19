@@ -1,8 +1,5 @@
 module.exports = [
   {
-    env: {
-      es2020: true
-    },
-    ignores: ["**/isbn_mod.js"]
+    ignores: ["**/isbn_mod.js", "src/wasm-rust/isbn_mod.js"]
   }
 ];
